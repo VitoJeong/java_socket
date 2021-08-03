@@ -31,10 +31,13 @@ public class Receiver implements Runnable {
     @Override
     public void run() {
         try {
-            String msg = in.readUTF();
-            user.sendMsg(msg, name);
+            while (true) {
+                String msg = in.readUTF();
+                user.sendMsg(msg, name);
+            }
         } catch (IOException e) {
             e.printStackTrace();
+            user.removeClient(name);
         }
     }
 }

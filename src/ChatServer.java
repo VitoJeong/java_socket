@@ -20,7 +20,7 @@ public class ChatServer {
             serverSocket = new ServerSocket(12500);
 
             while (true) {
-                serverSocket.accept();
+                socket = serverSocket.accept();
 
                 threads[count] = new Thread(new Receiver(user, socket));
                 threads[count].start();

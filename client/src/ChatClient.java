@@ -32,6 +32,7 @@ public class ChatClient {
 
             // 닉네임 전송
             out.writeUTF(data);
+            out.flush();
 
             // 클라이언트가 채팅 내용을 입력 및 서버로 전송하기 위한 스레드 생성
             Thread thread = new Thread(new Send(out));
@@ -48,6 +49,7 @@ public class ChatClient {
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             }
+            if(socket == null) break;
         }
     }
 }
