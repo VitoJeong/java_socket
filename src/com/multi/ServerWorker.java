@@ -45,6 +45,9 @@ public class ServerWorker extends Thread {
                     break;
                 } else if ("login".equalsIgnoreCase(cmd)) {
                     if (!isLoginSuccess(outputStream, tokens)) break;
+                } else if ("msg".equalsIgnoreCase(cmd)) {
+                    String[] tokenMsg = StringUtils.split(line, null, 3);
+                    handleMessage(tokenMsg);
                 } else {
                     String msg = login + ": " + cmd + "\n";
                     outputStream.write(msg.getBytes(StandardCharsets.UTF_8));
@@ -55,6 +58,21 @@ public class ServerWorker extends Thread {
         }
         clientSocket.close();
     }
+
+    // format: "msg" "login" msg...
+    private void handleMessage(String[] tokens) throws IOException {
+        String user = tokens[1];
+        String body = tokens[2];
+
+        List<ServerWorker> workerList = server.getWorkerList();
+        for (ServerWorker worker : workerList) {
+            if (user.equalsIgnoreCase(worker.getLogin())) {
+                String msg = "msg " + login + " " + body + "\n";
+                worker.send(msg);
+            }
+        }
+    }
+
 
     private void handleLogooff() throws IOException {
         server.removeWorker(this);

@@ -19,3 +19,9 @@ Commands :
 
     login {user} {password}
     logoff
+
+    msg {user} {body...}
+    [Send]
+    ubuntu: "msg root Hello"
+    [RECEIVE]
+    root: "msg ubuntu Hello"
