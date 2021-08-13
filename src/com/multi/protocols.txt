@@ -25,3 +25,10 @@ Commands :
     ubuntu: "msg root Hello"
     [RECEIVE]
     root: "msg ubuntu Hello"
+
+
+    #topic - chatroom / group chat
+    join #topic
+    leave #topic
+    send: msg #topic {body...}
+    receive: msg #topic login {body...}
