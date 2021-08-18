@@ -39,7 +39,7 @@ public class ServerWorker extends Thread {
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
         String line;
-        while ((line = reader.readLine()) != null) {
+        while ( (line = reader.readLine()) != null) {
             String[] tokens = StringUtils.split(line);
             if (tokens != null && tokens.length > 0) {
                 String cmd = tokens[0];
@@ -60,8 +60,6 @@ public class ServerWorker extends Thread {
                     outputStream.write(msg.getBytes(StandardCharsets.UTF_8));
                 }
             }
-            // String msg = "You typed:" + line + "\n";
-            // outputStream.write(msg.getBytes(StandardCharsets.UTF_8));
         }
         clientSocket.close();
     }
@@ -82,8 +80,8 @@ public class ServerWorker extends Thread {
     }
 
     private void handleJoin(String[] tokens) throws IOException {
-        if (login != null) {
-            String msg = "Please sign in to join a topic";
+        if (login == null) {
+            String msg = "Please sign in to join a topic\n";
             outputStream.write(msg.getBytes(StandardCharsets.UTF_8));
         }
         if (tokens.length > 1) {
@@ -173,6 +171,7 @@ public class ServerWorker extends Thread {
             } else {
                 String msg = "invalid access\n";
                 outputStream.write(msg.getBytes(StandardCharsets.UTF_8));
+                System.out.println("Login failed for " + login);
                 return false;
             }
         }
@@ -187,6 +186,19 @@ public class ServerWorker extends Thread {
     }
 
     private boolean checkAccess(String login, String password) {
-        return (login.equals("root") && password.equals("1234")) || (login.equals("ubuntu") && password.equals("ubuntu"));
+        if (login.equals("root")) {
+            return password.equals("1234");
+        }
+
+        if (login.equals("ubuntu")) {
+            return password.equals("ubuntu");
+        }
+
+        if (login.equals("guest")) {
+            return password.equals("guest");
+        }
+
+        return false;
     }
+
 }

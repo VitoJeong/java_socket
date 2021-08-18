@@ -1,0 +1,16 @@
+telnet 192.168.219.102 8818
+
+login root 1234
+
+login ubuntu ubuntu
+
+
+join #team
+
+msg ubuntu hello
+
+msg root hello
+
+msg #team hello
+
+quit
