@@ -61,17 +61,17 @@ public class ClientMain {
         }
     }
 
-    private void msg(String sendTo, String msgBody) throws IOException {
+    public void msg(String sendTo, String msgBody) throws IOException {
         String cmd = "msg " + sendTo + " " + msgBody + "\n";
         serverOut.write(cmd.getBytes(StandardCharsets.UTF_8));
     }
 
-    private void logoff() throws IOException{
+    public void logoff() throws IOException{
         String cmd = "logoff\n";
         serverOut.write(cmd.getBytes(StandardCharsets.UTF_8));
     }
 
-    private boolean login(String login, String password) throws IOException {
+    public boolean login(String login, String password) throws IOException {
         String cmd = "login " + login + " " + password + "\n";
         serverOut.write(cmd.getBytes(StandardCharsets.UTF_8));
 
@@ -148,7 +148,7 @@ public class ClientMain {
         }
     }
 
-    private boolean connect() {
+    public boolean connect() {
         try {
             this.socket = new Socket(serverName, serverPort);
             System.out.println("Client post is " + socket.getLocalPort());
